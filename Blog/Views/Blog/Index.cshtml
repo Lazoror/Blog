@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Blog.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@Html.ActionLink("Create article", "Create", "Blog", null, new { @class = "btn btn-default" })
+@foreach (var item in Model)
+{
+    <div class="article-wrap">
+        <div class="article-title">
+            <a href="@Url.Action("Article", "Blog", new {articleId = item.ArticleID })" target="_blank">
+                <div class="article-name">
+                    @Html.DisplayFor(a => item.Name)
+                </div>
+            </a>
+            <div class="article-date">
+                @Html.DisplayFor(a => item.CreateDate)
+            </div>
+        </div>
+        <div class="article-content">
+            @if (item.Content != null && item.Content.Length > 200)
+            {
+                string shortContent = item.Content.Substring(0, 200);
+
+                @Html.DisplayFor(a => shortContent)
+                <span>...</span>
+            }
+
+        </div>
+        @Html.ActionLink("Open Reviews", "Index", "Review", new { articleId = item.ArticleID }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Add Review", "Create", "Review", new { articleId = item.ArticleID }, new { @class = "btn btn-default" })
+    </div>
+}

@@ -1,0 +1,59 @@
+﻿@model Blog.Models.Poll
+@using Blog.Models
+@{
+    ViewBag.Title = "Poll";
+
+    List<string> languanges = new List<string>()
+{
+"C#",
+"JS",
+"C++",
+"Python"
+};
+
+@helper CreateCheckBoxList(List<string> list)
+{
+    <div class="chk-list">
+        @foreach (string item in list)
+        {
+            <p>@item</p>
+            <input type="checkbox" name="languages" value="@item" class="chk-box" />
+        }
+    </div>
+}
+
+}
+@using (Html.BeginForm("Create", "Poll", FormMethod.Post))
+{
+
+    <div class="review-form">
+        <h2>Poll</h2>
+
+        @using (Html.BeginForm("Index", "", FormMethod.Post))
+        {
+            <p>@Html.DisplayNameFor(a => a.Name)</p>
+            @Html.TextBoxFor(a => a.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.Name, "", new { @class = "text-danger" })
+
+            <p>@Html.DisplayNameFor(a => a.About)</p>
+            @Html.TextAreaFor(a => a.About, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.About, "", new { @class = "text-danger" })
+
+            <p>Вам больше 18 лет?</p>
+
+            <ul class="chk-list">
+                <li>Да @Html.RadioButtonFor(a => a.CheckAge, true, new { @class = "radio-button" })</li>
+                <li>Нет @Html.RadioButtonFor(a => a.CheckAge, false, new { @class = "radio-button" })</li>
+            </ul>
+            @Html.ValidationMessageFor(a => a.CheckAge, "", new { @class = "text-danger" })
+
+            <p>Какие языки хотите изучать?</p>
+
+            @CreateCheckBoxList(languanges)
+
+            <input type="submit" value="Отправить" class="btn btn-default" />
+
+        }
+    </div>
+
+}

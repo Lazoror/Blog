@@ -1,0 +1,32 @@
+﻿@model Blog.Models.Poll
+
+
+@{
+                /**/
+
+                ViewBag.Title = "Result";
+}
+
+<h2>Your poll</h2>
+
+<p>Вас зовут @Model.Name</p>
+
+@if (Model.CheckAge)
+{
+    <p>Вам больше 18</p>
+}
+else
+{
+    <p>Вам меньше 18</p>
+}
+
+@if (Model.About != null)
+{
+    <h2>Информация о вас:</h2>
+    <p>@Model.About</p>
+}
+
+
+<h2>Языки к изучению:</h2>
+
+@Model.Languages

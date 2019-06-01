@@ -1,0 +1,40 @@
+﻿@model Blog.Models.Article
+
+@{
+    ViewBag.Title = "Article";
+}
+
+
+@Html.ActionLink("Back to articles", "Index", "Blog")
+<div class="article">
+    <div class="article-title">
+        <div class="article-name">
+            @Html.DisplayFor(a => Model.Name)
+        </div>
+        <div class="article-date">
+            @Html.DisplayFor(a => Model.CreateDate)
+        </div>
+    </div>
+    <div class="article-content">
+
+        @Html.DisplayFor(a => Model.Content)
+
+    </div>
+    <div class="article-tags">
+        @if (!String.IsNullOrEmpty(Model.Tags))
+        {
+            List<string> tags = Model.Tags.Split(',').ToList();
+
+            foreach (string item in tags)
+            {
+                <div class="tag">
+                    @item
+                </div>
+            }
+        }
+
+    </div>
+    @Html.ActionLink("Add tags", "AddTag", "Blog", new { articleId = Model.ArticleID }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Open Reviews", "Index", "Review", new { articleId = Model.ArticleID }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Add Review", "Create", "Review", new { articleId = Model.ArticleID }, new { @class = "btn btn-default" })
+</div>

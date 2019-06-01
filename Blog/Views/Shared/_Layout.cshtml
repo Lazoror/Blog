@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Blog</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body id="top">
+
+    <header id="header">
+        <div class="header-wrapper">
+            <div class="header-img">
+                <a href="/Blog"><img src="~/logo.png" alt="Logo" /></a>
+            </div>
+            <div class="header-title">
+                @Html.ActionLink("My Mega blog", "Index", "Blog", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+        </div>
+    </header>
+
+
+    <div class="main-wrapper">
+
+        <div class="main-body">
+            @RenderBody()
+        </div>
+
+        <div class="right-sidebar">
+            <div class="sidebar-inner">
+                <nav class="nav-sidebar">
+                    <ul class="nav-menu">
+                        <li>@Html.ActionLink("Главная", "Index", "Blog")</li>
+                        <li>@Html.ActionLink("Анкета", "Index", "Poll")</li>
+                        <li>@Html.ActionLink("Голосование", "Index", "Vote", new { }, new { })</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <footer id="footer">
+        <p>&copy; @DateTime.Now.Year - Blog</p>
+        <a href="#top">back to top</a>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Blog.Models.FeedBack>
+
+@{
+     ViewBag.Title = "Review";
+}
+
+<div class="review-form">
+
+    <h2>Reviews</h2>
+
+    @Html.ActionLink("Bact to articles", "Index", "Blog", new { }, new { @class = "btn btn-default" })
+
+    @foreach (var item in Model)
+    {
+        <div class="review-wrap">
+            <div class="review-title">
+                <div class="review-author">
+                    @item.AuthorName
+                </div>
+                <div class="review-date">
+                    @item.AddTime
+                </div>
+            </div>
+            <div class="review-content">
+                <p>@item.Content</p>
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DAL.Models.Vote>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VoteName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoteResults)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoteStatus)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoteName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoteResults)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoteStatus)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { voteId = item.VoteId }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Delete", "Delete", new { voteId = item.VoteId }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Activate", "Activate", new { voteId = item.VoteId }, new { @class = "btn btn-default" })
+        </td>
+    </tr>
+}
+
+</table>

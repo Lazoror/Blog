@@ -1,0 +1,22 @@
+﻿@model DAL.Models.Vote
+
+@{
+    ViewBag.Title = "Vote";
+}
+
+<h2>@Model.VoteName</h2>
+@using (Html.BeginForm("Details", "Vote", FormMethod.Post))
+{
+    foreach (KeyValuePair<string, int> entry in ViewBag.results)
+    {
+        <input type="radio" name="values" value="@entry.Key" class="radio-button" />
+        <span>@entry.Key</span>
+
+        <p>@entry.Value</p>
+        @Html.HiddenFor(a => a.VoteId)
+    }
+
+    <div><input type="submit" value="Vote" /></div>
+
+
+}
