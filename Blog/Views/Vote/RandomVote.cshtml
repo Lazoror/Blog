@@ -1,0 +1,24 @@
+﻿@using DAL.Models
+
+@{
+    Vote vote = ViewBag.vote;
+}
+
+<div class="vote-container">
+    <p>Update - get random vote!</p>
+    <h3>@vote.VoteName</h3>
+    @using (Html.BeginForm("Details", "Vote", FormMethod.Post))
+    {
+        foreach (KeyValuePair<string, int> entry in ViewBag.results)
+        {
+            <input type="radio" name="values" value="@entry.Key" class="radio-button" />
+            <span>@entry.Key</span>
+
+            <p>@entry.Value</p>
+            @Html.HiddenFor(a => vote.VoteId)
+        }
+
+        <div><input type="submit" value="Vote" class="btn btn-default"/></div>
+
+    }
+</div>

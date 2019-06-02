@@ -16,6 +16,7 @@ namespace Blog.Controllers
 
         public ActionResult Index()
         {
+
             return View(voteControl.GetVotes());
         }
 
@@ -30,29 +31,40 @@ namespace Blog.Controllers
             return View(votFond);
         }
 
+
         [HttpPost]
-        public ActionResult Details(Guid voteId, List<string> values)
+        public ActionResult Details(Vote vote, List<string> values)
         {
-            Vote vot = voteControl.GetVote(voteId);
+            string urlRaw = HttpContext.Request.UrlReferrer.LocalPath;
+            Vote vot = voteControl.GetVote(vote.VoteId);
 
-            Dictionary<string, int> dictVotes = JsonConvert.DeserializeObject<Dictionary<string, int>>(vot.VoteResults);
-
-            foreach (string item in values)
+            if (values != null)
             {
+                Dictionary<string, int> dictVotes = JsonConvert.DeserializeObject<Dictionary<string, int>>(vot.VoteResults);
 
-                if (dictVotes.ContainsKey(item))
+                foreach (string item in values)
                 {
-                    dictVotes[item]++;
+
+                    if (dictVotes.ContainsKey(item))
+                    {
+                        dictVotes[item]++;
+                    }
                 }
+
+                string jsonDictionart = JsonConvert.SerializeObject(dictVotes);
+                ViewBag.results = dictVotes;
+                vot.VoteResults = jsonDictionart;
+
+                voteControl.UpdateVote(vot);
             }
 
-            string jsonDictionart = JsonConvert.SerializeObject(dictVotes);
-            ViewBag.results = dictVotes;
-            vot.VoteResults = jsonDictionart;
-
-            voteControl.UpdateVote(vot);
+            if (urlRaw == "/")
+            {
+                return RedirectToAction("Index", "Blog");
+            }
 
             return View(vot);
+
         }
 
         public ActionResult Create()

@@ -203,3 +203,7 @@ textarea {
 .article-tags {
     margin-bottom: 10px;
 }
+
+.vote-container {
+    padding: 15px;
+}

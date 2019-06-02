@@ -6,18 +6,46 @@ using System.Web.Mvc;
 using DAL.Access;
 using Blog.Models;
 using DAL.DbControl;
+using Newtonsoft.Json;
+using DAL.Models;
 
 namespace Blog.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly ArticleControl ArticleDb = new ArticleControl();
+        private readonly ArticleControl articleDb = new ArticleControl();
+        private readonly VoteControl voteControl = new VoteControl();
 
         // GET: Blog
         public ActionResult Index()
         {
+            // Get all votes
+            var votes = voteControl.GetVotes();
+
+            // create seed for random
+            Random rnd = new Random();
+
+            // get random number from 0 to vote length
+            int randNum = rnd.Next(0, votes.Count());
+
+            // Get random vote at random position
+            Vote randVote = votes.ElementAt(randNum);
+
+            ViewBag.vote = randVote;
+
+            // deserialize results to dictionary
+            Dictionary<string, int> dictVotes = JsonConvert.DeserializeObject<Dictionary<string, int>>(randVote.VoteResults);
+
+            ViewBag.results = dictVotes;
+
             // Get all articles from DB
-            return View(ArticleDb.GetAllArticles());
+            return View(articleDb.GetAllArticles());
+        }
+
+        [HttpPost]
+        public ActionResult Index(Guid voteId)
+        {
+            return Content("lol");
         }
 
         public ActionResult Create()
@@ -33,7 +61,7 @@ namespace Blog.Controllers
             {
                 article.CreateDate = DateTime.UtcNow.Date.ToShortDateString();
 
-                ArticleDb.AddArticle(article);
+                articleDb.AddArticle(article);
             }
 
             return RedirectToAction("Index");
@@ -41,7 +69,7 @@ namespace Blog.Controllers
 
         public ActionResult Article(int articleId)
         {
-            Article article = ArticleDb.GetArticle(articleId);
+            Article article = articleDb.GetArticle(articleId);
 
             return View(article);
         }
@@ -59,7 +87,7 @@ namespace Blog.Controllers
 
             if (!String.IsNullOrEmpty(tags))
             {
-                Article article = ArticleDb.GetArticle(articleId);
+                Article article = articleDb.GetArticle(articleId);
 
                 var oldTags = article.Tags.Split(',').ToList();
                 var newTags = tags.Split(',').ToList();
@@ -74,12 +102,17 @@ namespace Blog.Controllers
 
                 article.Tags = string.Join(",", oldTags.ToArray());
 
-                ArticleDb.UpdateArticle(article);
+                articleDb.UpdateArticle(article);
 
                 return RedirectToAction("Article", new { articleId });
             }
 
             return RedirectToAction("AddTag", new { articleId });
+        }
+
+        public ActionResult UpdVote()
+        {
+            return Content($"lol");
         }
     }
 }

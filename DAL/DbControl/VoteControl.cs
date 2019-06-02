@@ -23,6 +23,11 @@ namespace DAL.DbControl
             return db.Votes.FirstOrDefault(a => a.VoteId == voteId);
         }
 
+        public Vote GetVote(Guid? voteId)
+        {
+            return db.Votes.FirstOrDefault(a => a.VoteId == voteId);
+        }
+
         public IEnumerable<Vote> GetVotes()
         {
             return db.Votes.ToList();

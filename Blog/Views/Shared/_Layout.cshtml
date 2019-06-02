@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string action = ViewContext.RouteData.Values["action"].ToString();
+    string controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,6 +41,10 @@
                         <li>@Html.ActionLink("Голосование", "Index", "Vote", new { }, new { })</li>
                     </ul>
                 </nav>
+                @if(action == "Index" && controller == "Blog")
+                {
+                    @RenderPage("~/Views/Vote/RandomVote.cshtml")
+                }
             </div>
         </div>
 

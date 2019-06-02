@@ -211,6 +211,7 @@
     <Content Include="Views\Vote\Index.cshtml" />
     <Content Include="Views\Blog\AddTag.cshtml" />
     <Content Include="Views\Vote\Details.cshtml" />
+    <Content Include="Views\Vote\RandomVote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
